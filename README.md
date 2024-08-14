@@ -1,7 +1,6 @@
-# Spring AI - Analyzes pdf files and images for free and without limits
+# Spring AI - Obtains Lead Information via Web Scraping and Sends AI-Generated Emails
 
-This project demonstrates the integration of Spring AI with Ollama, utilizing the Llava model for AI-powered functionalities.
-
+This project demonstrates the integration of Spring AI with Ollama, utilizing the Llava model for AI-powered functionalities. It uses `jsoup` for web scraping to gather lead information and `Spring AI` to generate the email content.
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -20,20 +19,18 @@ Before you begin, ensure you have met the following requirements:
 - IDE [IntelliJ IDEA](https://www.jetbrains.com/idea/download) recommended
 - [Maven](https://maven.apache.org/download.cgi) version 3.9.0 or higher (Ideally installed for command line use)
 - [Ollama](https://ollama.com/download) installed and running on your system
-- Llava model downloaded and available in Ollama for image analysis
 - Llama3.1 model downloaded and available in Ollama for general knowledge
-- [Redis Cloud](https://app.redislabs.com/#/)
 
 ## Installation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/ricardoseb/spring-ollama-chat.git
+   git clone https://github.com/ricardoseb/spring-ollama-search-lead.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd spring-ollama-chat
+   cd spring-ollama-search-lead
    ```
 
 3. Build the project:
@@ -43,13 +40,12 @@ Before you begin, ensure you have met the following requirements:
 
 ## Configuration
 
-1. Set up the Redis URI environment variable: Open `Edit Configurations...` and configure the required environment variable.
-2. This project is pre-configured for Ollama models. If you need to set up any other model, open the application.properties (or application.yml) file and configure the desired model there.
+1. This project is pre-configured for Ollama models. If you need to set up any other model, open the application.properties (or application.yml) file and configure the desired model there.
    ```
    spring.ai.ollama.model=desiredModel
    ```
 
-3. Adjust any other settings as needed for your specific use case.
+2. Adjust any other settings as needed for your specific use case.
 
 ## Usage
 
@@ -62,11 +58,26 @@ Describe how to run and use your application. For example:
 
 2. Access the API endpoints (provide examples of available endpoints and how to use them).
 
+### Email Configuration
+
+
+To configure email sending using Gmail, add the following properties to your `application.properties` file, but first follow this tutorial for Gmail configuration:
+https://medium.com/@seonggil/send-email-with-spring-boot-and-gmail-27c14fc3d859
+
+```properties
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
 ## Features
 
-- Image analysis using Llava model
-- Natural language processing capabilities
 - Integration with Spring AI for seamless AI operations
+- Web Scraping capabilities
+- Email sending capabilities
 
 ## Contributing
 

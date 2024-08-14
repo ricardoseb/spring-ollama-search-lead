@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mailing options</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Choose Mailing options</h1>
+    <form action="/mail" method="post" enctype="multipart/form-data" class="space-y-4" id="chatForm">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Email Generation Method:</label>
+            <div class="mt-2 space-y-2">
+                <div class="flex items-center">
+                    <input id="useAI" name="emailMethod" type="radio" value="useAI"
+                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                           onclick="toggleEmailMethod('useAI')">
+                    <label for="useAI" class="ml-2 block text-sm text-gray-700">Use AI to generate the email</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="manual" name="emailMethod" type="radio" value="manual"
+                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                           onclick="toggleEmailMethod('manual')">
+                    <label for="manual" class="ml-2 block text-sm text-gray-700">Do it manually</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="test" name="emailMethod" type="radio" value="test"
+                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                           onclick="toggleEmailMethod('test')">
+                    <label for="test" class="ml-2 block text-sm text-gray-700">Test</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="aiFields" class="hidden">
+            <div>
+                <label for="product" class="block text-sm font-medium text-gray-700">Product to promote:</label>
+                <input type="text" id="product" name="product"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., New Software">
+            </div>
+            <div>
+                <label for="sender" class="block text-sm font-medium text-gray-700">Your name:</label>
+                <input type="text" id="sender" name="sender"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., John Doe">
+            </div>
+        </div>
+
+        <div id="manualFields" class="hidden">
+            <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700">Subject:</label>
+                <input type="text" id="subject" name="subject"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., Meeting Request">
+            </div>
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-700">Content:</label>
+                <textarea id="content" name="content"
+                          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                          placeholder="Write your email content here..."></textarea>
+            </div>
+        </div>
+
+        <div id="testFields" class="hidden">
+            <div>
+                <label for="to" class="block text-sm font-medium text-gray-700">To:</label>
+                <input type="text" id="to" name="to"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., xxxxx@gmail.com">
+            </div>
+            <div>
+                <label for="subject2" class="block text-sm font-medium text-gray-700">Subject:</label>
+                <input type="text" id="subject2" name="subject2"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., Meeting Request">
+            </div>
+            <div>
+                <label for="product2" class="block text-sm font-medium text-gray-700">Product to promote:</label>
+                <input type="text" id="product2" name="product2"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., New Software">
+            </div>
+            <div>
+                <label for="senderName" class="block text-sm font-medium text-gray-700">Your name:</label>
+                <input type="text" id="senderName" name="senderName"
+                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                       placeholder="e.g., John Doe">
+            </div>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+                id="submitButton">Generate Email
+        </button>
+        <div id="loadingSpinner" class="hidden w-full flex justify-center">
+            <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+        </div>
+    </form>
+</div>
+<script>
+    function toggleEmailMethod(selectedMethod) {
+        document.getElementById('useAI').checked = selectedMethod === 'useAI';
+        document.getElementById('manual').checked = selectedMethod === 'manual';
+        document.getElementById('test').checked = selectedMethod === 'test';
+
+        document.getElementById('aiFields').classList.toggle('hidden', selectedMethod !== 'useAI');
+        document.getElementById('manualFields').classList.toggle('hidden', selectedMethod !== 'manual');
+        document.getElementById('testFields').classList.toggle('hidden', selectedMethod !== 'test');
+
+        const form = document.getElementById('chatForm');
+        const submitButton = document.getElementById('submitButton');
+        if (selectedMethod === 'test') {
+            form.action = '/mail/test';
+            submitButton.textContent = 'Test';
+        } else {
+            submitButton.textContent = 'Generate Email';
+        }
+    }
+</script>
+</body>
+</html>

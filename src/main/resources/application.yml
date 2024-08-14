@@ -1,23 +1,23 @@
-file:
-  upload-dir: ./uploads
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${YOUR_EMAIL}
+    password: ${APP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   ai:
-    vectorstore:
-      redis:
-        uri: ${REDIS}
-        index: faqs
-        prefix: "faq:"
-        initialize-schema: true
     ollama:
       chat:
         model: llama3.1:latest
         options:
           temperature: 0.2
+          model: llama3.1:latest
   application:
     name: spring-ollama-chat
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
   thymeleaf:
     cache: false

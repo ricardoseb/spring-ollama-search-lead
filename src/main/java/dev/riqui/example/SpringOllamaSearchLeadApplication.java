@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringOllamaChatApplication {
+public class SpringOllamaSearchLeadApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringOllamaChatApplication.class, args);
+		SpringApplication.run(SpringOllamaSearchLeadApplication.class, args);
 	}
 
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Scraping options</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Choose Lead Scraping options</h1>
+    <form action="/scraper" method="post" enctype="multipart/form-data" class="space-y-4" id="chatForm">
+        <div>
+            <label for="country" class="block text-sm font-medium text-gray-700">Select a country to search leads:</label>
+            <select id="country" name="country"  class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                <option value="argentina" class="flex items-center">Argentina</option>
+                <option value="bolivia" class="flex items-center">Bolivia</option>
+                <option value="brazil" class="flex items-center">Brazil</option>
+                <option value="chile" class="flex items-center" selected>Chile</option>
+                <option value="colombia" class="flex items-center">Colombia</option>
+                <option value="costa_rica" class="flex items-center">Costa Rica</option>
+                <option value="cuba" class="flex items-center">Cuba</option>
+                <option value="dominican_republic" class="flex items-center">Dominican Republic</option>
+                <option value="ecuador" class="flex items-center">Ecuador</option>
+                <option value="el_salvador" class="flex items-center">El Salvador</option>
+                <option value="guatemala" class="flex items-center">Guatemala</option>
+                <option value="honduras" class="flex items-center">Honduras</option>
+                <option value="mexico" class="flex items-center">Mexico</option>
+                <option value="nicaragua" class="flex items-center">Nicaragua</option>
+                <option value="panama" class="flex items-center">Panama</option>
+                <option value="paraguay" class="flex items-center">Paraguay</option>
+                <option value="peru" class="flex items-center">Peru</option>
+                <option value="puerto_rico" class="flex items-center">Puerto Rico</option>
+                <option value="spain" class="flex items-center">España</option>
+                <option value="uruguay" class="flex items-center">Uruguay</option>
+                <option value="venezuela" class="flex items-center">Venezuela</option>
+            </select>
+        </div>
+        <div>
+            <label for="profession" class="block text-sm font-medium text-gray-700">Enter profession or occupation:</label>
+            <input type="text" id="profession" name="profession" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" placeholder="e.g., Personal Trainer">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Select platform(s) to search:</label>
+            <div class="mt-2 space-y-2">
+                <div class="flex items-center">
+                    <input id="instagram" name="platforms" type="checkbox" value="instagram" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="instagram" class="ml-2 block text-sm text-gray-700">Instagram</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="facebook" name="platforms" type="checkbox" value="facebook" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="facebook" class="ml-2 block text-sm text-gray-700">Facebook</label>
+                </div>
+                <div class="flex items-center">
+                    <input id="linkedin" name="platforms" type="checkbox" value="linkedin" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                    <label for="linkedin" class="ml-2 block text-sm text-gray-700">LinkedIn</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300" id="submitButton">Search</button>
+        <div id="loadingSpinner" class="hidden w-full flex justify-center">
+            <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById('chatForm').addEventListener('submit', function() {
+        document.getElementById('submitButton').classList.add('hidden');
+        document.getElementById('loadingSpinner').classList.remove('hidden');
+    });
+</script>
+</body>
+</html>

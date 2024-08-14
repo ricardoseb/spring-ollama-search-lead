@@ -9,7 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class Message {
-    private String question;
-    private String response;
+    private Integer emails;
 
 }
