@@ -15,23 +15,10 @@
         <pre class="whitespace-pre-wrap break-words"><span th:text="${mailContent}"></span></pre>
     </div>
     <div class="mt-6 text-center">
-        <button onclick="closeModal()"
+        <a  href="/mail"
                 class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">Close
-        </button>
+        </a>
     </div>
 </div>
-<script>
-    document.getElementById('closeButton').addEventListener('click', function () {
-        window.close();
-        setTimeout(function () {
-            if (!window.closed) {
-                document.getElementById('closeMessage').classList.remove('hidden');
-            }
-        }, 300);
-    });
-    if (window.opener) {
-        window.opener.postMessage('closeEmailTestWindow', '*');
-    }
-</script>
 </body>
 </html>

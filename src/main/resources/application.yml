@@ -21,3 +21,6 @@ spring:
     name: spring-ollama-chat
   thymeleaf:
     cache: false
+  threads:
+    virtual:
+      enabled: true

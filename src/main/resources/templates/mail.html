@@ -20,12 +20,6 @@
                     <label for="useAI" class="ml-2 block text-sm text-gray-700">Use AI to generate the email</label>
                 </div>
                 <div class="flex items-center">
-                    <input id="manual" name="emailMethod" type="radio" value="manual"
-                           class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                           onclick="toggleEmailMethod('manual')">
-                    <label for="manual" class="ml-2 block text-sm text-gray-700">Do it manually</label>
-                </div>
-                <div class="flex items-center">
                     <input id="test" name="emailMethod" type="radio" value="test"
                            class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
                            onclick="toggleEmailMethod('test')">
@@ -46,21 +40,6 @@
                 <input type="text" id="sender" name="sender"
                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                        placeholder="e.g., John Doe">
-            </div>
-        </div>
-
-        <div id="manualFields" class="hidden">
-            <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700">Subject:</label>
-                <input type="text" id="subject" name="subject"
-                       class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                       placeholder="e.g., Meeting Request">
-            </div>
-            <div>
-                <label for="content" class="block text-sm font-medium text-gray-700">Content:</label>
-                <textarea id="content" name="content"
-                          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                          placeholder="Write your email content here..."></textarea>
             </div>
         </div>
 
@@ -107,11 +86,9 @@
 <script>
     function toggleEmailMethod(selectedMethod) {
         document.getElementById('useAI').checked = selectedMethod === 'useAI';
-        document.getElementById('manual').checked = selectedMethod === 'manual';
         document.getElementById('test').checked = selectedMethod === 'test';
 
         document.getElementById('aiFields').classList.toggle('hidden', selectedMethod !== 'useAI');
-        document.getElementById('manualFields').classList.toggle('hidden', selectedMethod !== 'manual');
         document.getElementById('testFields').classList.toggle('hidden', selectedMethod !== 'test');
 
         const form = document.getElementById('chatForm');

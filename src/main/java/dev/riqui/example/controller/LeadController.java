@@ -47,26 +47,20 @@ public class LeadController {
         return "mail";
     }
 
+    @GetMapping("/mail")
+    public String mail() {
+        return "mail";
+    }
+
     @PostMapping("/mail")
-    public String mail(@RequestParam("subject") String subject,
-                       @RequestParam("content") String content,
-                       @RequestParam("product") String product,
+    public String mail(@RequestParam("product") String product,
                        @RequestParam("sender") String sender,
                        Model model) {
         log.info("results size: {}", results.size());
         int emailCount = 0;
-        if (!product.isEmpty() && !sender.isEmpty()) {
-            for (Map<String, String> result : results) {
-                String mailContent = emailAIService.getMailContent(result.get("name"), product, sender);
-                emailService.sendEmail(result, mailContent);
-                emailCount++;
-            }
-            model.addAttribute("emailCount", emailCount);
-            return "result";
-        }
-
         for (Map<String, String> result : results) {
-            emailService.sendEmail(result.get("email"), subject, content);
+            String mailContent = emailAIService.getMailContent(result.get("name"), product, sender);
+            emailService.sendEmail(result, mailContent);
             emailCount++;
         }
         model.addAttribute("emailCount", emailCount);

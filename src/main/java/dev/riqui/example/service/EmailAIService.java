@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author ricardoquiroga on 01-08-24
@@ -28,19 +28,29 @@ public class EmailAIService {
     }
 
     public String getMailContent(String name, String product, String sender) {
-        return this.chatClient.prompt()
+        String content = this.chatClient.prompt()
                 .user(u -> u.text(emailPrompt).params(createParams(name, product, sender)))
                 .call()
                 .content();
+
+        return processMarkdown(content);
     }
 
 
-    private Map<String, Object> createParams(String name, String product, String sender ) {
+    private Map<String, Object> createParams(String name, String product, String sender) {
         Map<String, Object> params = new HashMap<>();
         params.put("product", product);
         params.put("sender", sender);
         params.put("name", name);
 
         return params;
+    }
+
+    private String processMarkdown(String content) {
+        content = Pattern.compile("\\*\\*(.*?)\\*\\*")
+                .matcher(content)
+                .replaceAll("<strong>$1</strong>");
+
+        return content;
     }
 }
