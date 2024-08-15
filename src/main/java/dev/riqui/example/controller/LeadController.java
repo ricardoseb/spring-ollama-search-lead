@@ -59,8 +59,8 @@ public class LeadController {
         log.info("results size: {}", results.size());
         int emailCount = 0;
         for (Map<String, String> result : results) {
-            String mailContent = emailAIService.getMailContent(result.get("name"), product, sender);
-            emailService.sendEmail(result, mailContent);
+            Map<String, String> mailContent = emailAIService.getMailContent(result.get("name"), product, sender);
+            emailService.sendEmail(result, mailContent.get("body"));
             emailCount++;
         }
         model.addAttribute("emailCount", emailCount);
@@ -69,11 +69,10 @@ public class LeadController {
 
     @PostMapping("/mail/test")
     public String mailTest(@RequestParam("to") String to,
-                           @RequestParam("subject2") String subject2,
                            @RequestParam("product2") String product2, @RequestParam("senderName") String senderName,
                            Model model) {
-        String mailContent = emailAIService.getMailContent("Test", product2, senderName);
-        emailService.sendEmail(to, subject2, mailContent);
+        Map<String, String> mailContent = emailAIService.getMailContent("Test", product2, senderName);
+        emailService.sendEmail(to, mailContent.get("subject"), mailContent.get("body"));
         model.addAttribute("mailContent", mailContent);
         return "modal";
     }

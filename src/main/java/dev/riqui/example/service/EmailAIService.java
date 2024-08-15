@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -27,15 +28,14 @@ public class EmailAIService {
         this.chatClient = chatClient.build();
     }
 
-    public String getMailContent(String name, String product, String sender) {
+    public Map<String, String> getMailContent(String name, String product, String sender) {
         String content = this.chatClient.prompt()
                 .user(u -> u.text(emailPrompt).params(createParams(name, product, sender)))
                 .call()
                 .content();
 
-        return processMarkdown(content);
+        return extractSubjectAndBody(cleanContent(content));
     }
-
 
     private Map<String, Object> createParams(String name, String product, String sender) {
         Map<String, Object> params = new HashMap<>();
@@ -46,11 +46,27 @@ public class EmailAIService {
         return params;
     }
 
-    private String processMarkdown(String content) {
-        content = Pattern.compile("\\*\\*(.*?)\\*\\*")
-                .matcher(content)
-                .replaceAll("<strong>$1</strong>");
+    private String cleanContent(String content) {
+        content = content.replaceAll("\\*\\*", "");
+        content = content.replaceAll("<[/]?(strong|b|em|i|u|br)[^>]*>", "");
+        content = content.replaceAll("<br\\s*/?>", "\n");
 
         return content;
+    }
+
+    private Map<String, String> extractSubjectAndBody(String content) {
+        Map<String, String> result = new HashMap<>();
+        Pattern pattern = Pattern.compile("Asunto: (.*?)\\n(.*)", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find()) {
+            result.put("subject", matcher.group(1).trim());
+            result.put("body", matcher.group(2).trim());
+        } else {
+            result.put("subject", "");
+            result.put("body", content.trim());
+        }
+
+        return result;
     }
 }
