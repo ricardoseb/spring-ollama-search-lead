@@ -28,13 +28,14 @@ public class EmailAIService {
         this.chatClient = chatClient.build();
     }
 
+    // the content is markdown
     public Map<String, String> getMailContent(String name, String product, String sender) {
         String content = this.chatClient.prompt()
                 .user(u -> u.text(emailPrompt).params(createParams(name, product, sender)))
                 .call()
                 .content();
 
-        return extractSubjectAndBody(cleanContent(content));
+        return extractSubjectAndBody(content);
     }
 
     private Map<String, Object> createParams(String name, String product, String sender) {
@@ -46,13 +47,6 @@ public class EmailAIService {
         return params;
     }
 
-    private String cleanContent(String content) {
-        content = content.replaceAll("\\*\\*", "");
-        content = content.replaceAll("<[/]?(strong|b|em|i|u|br)[^>]*>", "");
-        content = content.replaceAll("<br\\s*/?>", "\n");
-
-        return content;
-    }
 
     private Map<String, String> extractSubjectAndBody(String content) {
         Map<String, String> result = new HashMap<>();
