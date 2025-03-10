@@ -1,6 +1,6 @@
 # Spring Framework - Obtains Lead Information via Web Scraping and Sends AI-Generated Emails
 
-This project demonstrates the integration of Spring AI with Ollama, utilizing the Llava model for AI-powered functionalities. It uses `jsoup` for web scraping to gather lead information and `Spring AI` to generate the email content.
+This project demonstrates the integration of Spring AI with Ollama, utilizing the Llama model for AI-powered functionalities. It uses `jsoup` for web scraping to gather lead information and `Spring AI` to generate the email content.
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
